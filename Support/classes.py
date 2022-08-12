@@ -128,3 +128,18 @@ class Token:
         for i in range(5):
             token += str(choice(chars))
         return token
+
+    @staticmethod
+    def activate_token(token):
+        """Set token column in the database as 1 (active) and return True"""
+        try:
+            db = ConnectDB('localhost', 'root', '', 'login_python')
+            conn = db.connect()
+            cursor = conn.cursor()
+
+            sql = f"UPDATE tokens SET active='1' WHERE token='{token}'"
+            cursor.execute(sql)
+            conn.commit()
+            return True
+        except mysql.connector.Error as errorMsg:
+            return f'Error: {errorMsg}'
