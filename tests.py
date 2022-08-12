@@ -9,6 +9,8 @@ token = token_obj.generate_token()
 
 acc = classes.Account('joao', 'joao@gmail.com', '87312')
 
+email = classes.Email()
+
 
 # Testing Attributes
 print('======== TESTING ATTRIBUTES ========')
@@ -32,4 +34,5 @@ print(f"send_token(token): {database.send_token(token)}\n")
 print(f"Account __repr__: {acc}\n")
 print(f"{database.send_account(acc.user, acc.email, acc.password)}\n")
 print(f"activate_token(token): {token_obj.activate_token('1e144')}\n")
-print(database.check_account('testaccount@gmail.com', '2005'))
+print(f"check_account(email, password): {database.check_account('testaccount@gmail.com', '2005')}\n")
+print(email.send_email('new_account_registration_here@gmail.com', token))

@@ -1,4 +1,5 @@
 import mysql.connector
+import smtplib
 from random import choice
 
 
@@ -158,6 +159,40 @@ class Token:
             return True
         except mysql.connector.Error as errorMsg:
             return f'Error: {errorMsg}'
+
+
+class Email:
+    def __init__(self):
+        pass
+
+    def __repr__(self):
+        return f'{self.__class__.__name__} Class'
+
+    @staticmethod
+    def send_email(receiver, token):
+        """Send an email with the authentication token"""
+        email_sender = 'your_email_here@gmail.com'  # Your Google account here
+        email_password = 'your_app_password_here'  # Your app password here
+        email_receiver = receiver
+
+        subject = 'Your Activation Token'
+        body = f'Thanks for joining us\n{token}'
+
+        try:
+            # Gmail -> smtp.gmail.com
+            # Hotmail -> smtp.live.com
+            # Yahoo -> smtp.mail.yahoo.com
+            with smtplib.SMTP('smtp.gmail.com') as connection:
+                connection.starttls()  # Encrypting our connection to the server
+                connection.login(email_sender, email_password)
+                connection.sendmail(from_addr=email_sender,
+                                    to_addrs=email_receiver,
+                                    msg=f'Subject:{subject}\n\n{body}'
+                                    )
+                return True
+        except smtplib.SMTPAuthenticationError as errorMsg:
+            print(f"Error: {errorMsg}")
+            return False
 
 
 class Account:
