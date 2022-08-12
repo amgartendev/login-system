@@ -79,6 +79,21 @@ class ConnectDB:
             return True  # Email already taken
         return False
 
+    def check_account(self, email, password):
+        """Check if the account exists in the database and return True"""
+        db = ConnectDB(self.__dbhost, self.__dbuser, self.__dbpassword, self.__dbname)
+        conn = db.connect()
+        cursor = conn.cursor()
+
+        sql = f"SELECT * FROM accounts WHERE email='{email}' AND password='{password}'"
+        cursor.execute(sql)
+        rows = cursor.fetchall()
+
+        # Check if the email and password passed as argument is registered in the database
+        if len(rows) > 0:
+            return True
+        return False
+
     def send_account(self, *args):
         """Send account details to the database"""
 
@@ -143,3 +158,25 @@ class Token:
             return True
         except mysql.connector.Error as errorMsg:
             return f'Error: {errorMsg}'
+
+
+class Account:
+    def __init__(self, user, email, password):
+        self.__user = user
+        self.__email = email
+        self.__password = password
+
+    def __repr__(self):
+        return f'{self.__class__.__name__}({self.__user}, {self.__email}, {self.__password})'
+
+    @property
+    def user(self):
+        return self.__user
+
+    @property
+    def email(self):
+        return self.__email
+
+    @property
+    def password(self):
+        return self.__password
