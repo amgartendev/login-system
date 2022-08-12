@@ -1,4 +1,5 @@
 import mysql.connector
+from random import choice
 
 
 class ConnectDB:
@@ -95,3 +96,35 @@ class ConnectDB:
             return True
         except mysql.connector.Error as errorMsg:
             return f'Error: {errorMsg}'
+
+    def send_token(self, token):
+        """Send token to the database and set it as inactive by default"""
+        try:
+            db = ConnectDB(self.__dbhost, self.__dbuser, self.__dbpassword, self.__dbname)
+            conn = db.connect()
+            cursor = conn.cursor()
+
+            sql = f"INSERT INTO tokens (token, active) VALUES ('{token}', '0')"
+            cursor.execute(sql)
+            conn.commit()
+            return True
+        except mysql.connector.Error as errorMsg:
+            return f'Error: {errorMsg}'
+
+
+class Token:
+    def __init__(self):
+        pass
+
+    def __repr__(self):
+        return f'{self.__class__.__name__} Class'
+
+    @staticmethod
+    def generate_token():
+        """Creates a token with 759.375 different combinations and return it"""
+        chars = ['a', 'b', 'c', 'd', 'e', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+        token = ''
+
+        for i in range(5):
+            token += str(choice(chars))
+        return token
