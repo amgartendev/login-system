@@ -1,6 +1,7 @@
 import mysql.connector
 import smtplib
 from random import choice
+from email.message import EmailMessage
 
 
 class ConnectDB:
@@ -175,8 +176,20 @@ class Email:
         email_password = 'your_app_password_here'  # Your app password here
         email_receiver = receiver
 
-        subject = 'Your Activation Token'
-        body = f'Thanks for joining us\n{token}'
+        msg = EmailMessage()
+        msg['Subject'] = 'Your Activation Token'
+        msg['From'] = email_sender
+        msg['To'] = email_receiver
+        msg.set_content(f'Thanks for joining us\n{token}')
+        msg.add_alternative(f"""\
+        <!DOCTYPE html>
+        <html>
+            <body>
+                <h1 style="color:#047BBF; text-align:center;">Thanks for joining us</h1>
+                <h1 style="text-align:center;">Your acess token:<br>{token}</h1>
+            </body>
+        </html>
+        """, subtype='html')
 
         try:
             # Gmail -> smtp.gmail.com
@@ -185,10 +198,7 @@ class Email:
             with smtplib.SMTP('smtp.gmail.com') as connection:
                 connection.starttls()  # Encrypting our connection to the server
                 connection.login(email_sender, email_password)
-                connection.sendmail(from_addr=email_sender,
-                                    to_addrs=email_receiver,
-                                    msg=f'Subject:{subject}\n\n{body}'
-                                    )
+                connection.send_message(msg)
                 return True
         except smtplib.SMTPAuthenticationError as errorMsg:
             print(f"Error: {errorMsg}")
