@@ -173,7 +173,7 @@ class Email:
     def send_email(receiver, token):
         """Send an email with the authentication token"""
         email_sender = 'your_email_here@gmail.com'  # Your Google account here
-        email_password = 'your_app_password_here'  # Your app password here
+        email_password = 'you_app_password_here'  # Your app password here
         email_receiver = receiver
 
         msg = EmailMessage()
