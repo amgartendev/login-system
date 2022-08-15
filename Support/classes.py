@@ -1,29 +1,30 @@
-import mysql.connector
+import mysql.connector  # type: ignore
 import smtplib
 from random import choice
 from email.message import EmailMessage
+from typing import Union
 
 
 class ConnectDB:
-    def __init__(self, dbhost, dbuser, dbpassword, dbname):
+    def __init__(self, dbhost: str, dbuser: str, dbpassword: str, dbname: str) -> None:
         self.__dbhost = dbhost
         self.__dbuser = dbuser
         self.__dbpassword = dbpassword
         self.__dbname = dbname
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f'{self.__class__.__name__}({self.__dbhost}, {self.__dbuser}, {self.__dbpassword}, {self.__dbname})'
 
     @property
-    def host(self):
+    def host(self) -> str:
         return self.__dbhost
 
     @property
-    def user(self):
+    def user(self) -> str:
         return self.__dbuser
 
     @property
-    def name(self):
+    def name(self) -> str:
         return self.__dbname
 
     def connect(self):
@@ -39,7 +40,7 @@ class ConnectDB:
         except mysql.connector.Error as errorMsg:
             return f'Error: {errorMsg}'
 
-    def return_infos(self, table):
+    def return_infos(self, table: str) -> list:
         """Return all the occurrences of the specified table"""
         db = ConnectDB(self.__dbhost, self.__dbuser, self.__dbpassword, self.__dbname)
         conn = db.connect()
@@ -51,7 +52,7 @@ class ConnectDB:
         print(f'{len(result)} result(s) found in {table}!')
         return result
 
-    def check_user(self, user):
+    def check_user(self, user: str) -> bool:
         """Check if the user is already taken and return True"""
         db = ConnectDB(self.__dbhost, self.__dbuser, self.__dbpassword, self.__dbname)
         conn = db.connect()
@@ -66,7 +67,7 @@ class ConnectDB:
             return True  # User already taken
         return False
 
-    def check_email(self, email):
+    def check_email(self, email: str) -> bool:
         """Check if the email is already taken and return True"""
         db = ConnectDB(self.__dbhost, self.__dbuser, self.__dbpassword, self.__dbname)
         conn = db.connect()
@@ -81,7 +82,7 @@ class ConnectDB:
             return True  # Email already taken
         return False
 
-    def check_account(self, email, password):
+    def check_account(self, email: str, password: str) -> bool:
         """Check if the account exists in the database and return True"""
         db = ConnectDB(self.__dbhost, self.__dbuser, self.__dbpassword, self.__dbname)
         conn = db.connect()
@@ -96,7 +97,7 @@ class ConnectDB:
             return True
         return False
 
-    def send_account(self, *args):
+    def send_account(self, *args) -> Union[bool, str]:
         """Send account details to the database"""
 
         account = tuple(args)
@@ -114,7 +115,7 @@ class ConnectDB:
         except mysql.connector.Error as errorMsg:
             return f'Error: {errorMsg}'
 
-    def send_token(self, token):
+    def send_token(self, token: str) -> Union[bool, str]:
         """Send token to the database and set it as inactive by default"""
         try:
             db = ConnectDB(self.__dbhost, self.__dbuser, self.__dbpassword, self.__dbname)
@@ -130,14 +131,14 @@ class ConnectDB:
 
 
 class Token:
-    def __init__(self):
+    def __init__(self) -> None:
         pass
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f'{self.__class__.__name__} Class'
 
     @staticmethod
-    def generate_token():
+    def generate_token() -> str:
         """Creates a token with 759.375 different combinations and return it"""
         chars = ['a', 'b', 'c', 'd', 'e', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
         token = ''
@@ -147,7 +148,7 @@ class Token:
         return token
 
     @staticmethod
-    def activate_token(token):
+    def activate_token(token: str) -> Union[bool, str]:
         """Set token column in the database as 1 (active) and return True"""
         try:
             db = ConnectDB('localhost', 'root', '', 'login_python')
@@ -163,14 +164,14 @@ class Token:
 
 
 class Email:
-    def __init__(self):
+    def __init__(self) -> None:
         pass
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f'{self.__class__.__name__} Class'
 
     @staticmethod
-    def send_email(receiver, token):
+    def send_email(receiver: str, token: str) -> bool:
         """Send an email with the authentication token"""
         email_sender = 'your_email_here@gmail.com'  # Your Google account here
         email_password = 'you_app_password_here'  # Your app password here
@@ -206,22 +207,22 @@ class Email:
 
 
 class Account:
-    def __init__(self, user, email, password):
+    def __init__(self, user: str, email: str, password: str) -> None:
         self.__user = user
         self.__email = email
         self.__password = password
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f'{self.__class__.__name__}({self.__user}, {self.__email}, {self.__password})'
 
     @property
-    def user(self):
+    def user(self) -> str:
         return self.__user
 
     @property
-    def email(self):
+    def email(self) -> str:
         return self.__email
 
     @property
-    def password(self):
+    def password(self) -> str:
         return self.__password
