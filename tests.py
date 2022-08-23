@@ -1,38 +1,41 @@
-from Support import classes
-
-# Creating the connection to the database
-database = classes.ConnectDB('localhost', 'root', '', 'login_python')
-database.connect()
-
-token_obj = classes.Token()
-token = token_obj.generate_token()
-
-acc = classes.Account('joao', 'joao@gmail.com', '87312')
-
-email = classes.Email()
+from models import account
+from models import connectdb
+from models import email
+from models import token
 
 
-# Testing Attributes
-print('======== TESTING ATTRIBUTES ========')
-print(f"host attr: {database.host}")
-print(f"user attr: {database.user}")
-print(f"name attr: {database.name}")
-print(f"user attr: {acc.user}")
-print(f"email attr: {acc.email}")
+acc1 = account.Account('Joao', 'joao@gmail.com', '123')
+print("=========== TESTING ACCOUNT ===========")
+print(f"__repr__: {acc1}")
+print(f"user: {acc1.user}")
+print(f"email: {acc1.email}")
+print(f"password: {acc1.password}")
+print(f"check_user(): {acc1.check_user('joao')}")
+print(f"check_email(): {acc1.check_email('joao@gmail.com')}")
+print(f"check_account() Expect False: {acc1.check_account('joao@gmail.com', '1234')}")  # Expected: False
+print(f"check_account() Expect True: {acc1.check_account('joao@gmail.com', '87312')}")  # Expected: True
+print(f"send_account(): {acc1.send_account(acc1.user, acc1.email, acc1.password)}")
 
-# Testing Methods
-print('\n======== TESTING METHODS ========')
-print(f"ConnectDB __repr__: {database}")
-print(f"return_infos(account): {database.return_infos('accounts')}\n")
-print(f"return_infos(tokens): {database.return_infos('tokens')}\n")
-print(f"check_user(amgarten): {database.check_user('amgarten')}\n")
-print(f"check_email(amgarten@gmail.com): {database.check_email('amgarten@gmail.com')}\n")
-# print(f"send_account: {database.send_account(('Teste', 'teste@gmail.com', '231'))}")
-print(f"Token __repr__: {token_obj}\n")
-print(f"generate_token: {token}\n")
-print(f"send_token(token): {database.send_token(token)}\n")
-print(f"Account __repr__: {acc}\n")
-print(f"{database.send_account(acc.user, acc.email, acc.password)}\n")
-print(f"activate_token(token): {token_obj.activate_token(token)}\n")
-print(f"check_account(email, password): {database.check_account('testaccount@gmail.com', '2005')}\n")
-print(email.send_email('new_account_registration_here@gmail.com', token))
+
+db1 = connectdb.ConnectDB('localhost', 'root', '', 'login_python')
+print("\n=========== TESTING CONNECTDB ===========")
+print(f"__repr__: {db1}")
+print(f"host: {db1.host}")
+print(f"user: {db1.user}")
+print(f"name: {db1.name}")
+print(f"connect(): {db1.connect()}")
+print(f"return_infos(): {db1.return_infos('tokens')}")
+
+
+email = email.Email()
+print("\n=========== TESTING EMAIL ===========")
+print(f"__repr__: {email}")
+print(f"send_email(): {email.send_email('new_account_registration_here@gmail.com', '123')}")
+
+
+token = token.Token()
+print("\n=========== TESTING TOKEN ===========")
+print(f"__repr__: {token}")
+print(f"generate_token(): {token.generate_token()}")
+print(f"send_token(): {token.send_token('123')}")
+print(f"activate_token(): {token.activate_token('123')}")

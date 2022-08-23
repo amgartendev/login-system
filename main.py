@@ -1,8 +1,9 @@
-from Support import classes
+from models import connectdb
 
 # TODO Add Change Infos option
 # TODO Add a configuration file with important constants
 # TODO Add a different menu when logged in
+# TODO Fix misspeling at line 15 "Choose an valid option" to "Choose a valid option"
 
 
 print('===== LOGIN SYSTEM =====')
@@ -15,6 +16,7 @@ while option != '1' and option != '2' and option != '3':
     print('Error: Choose an valid option!')
     option = input('>>>: ').strip()
 
+# Log in
 if option == '1':
     database = classes.ConnectDB('localhost', 'root', '', 'login_python')
     login_attempts = 0
@@ -33,8 +35,12 @@ if option == '1':
         else:
             print('Email or password not valid!!')
             login_attempts += 1
+
+# Sign Up
 elif option == '2':
     pass
+
+# Exit
 else:
     print('Bye Bye...')
     exit()
