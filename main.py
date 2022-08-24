@@ -1,46 +1,55 @@
+from models import account
 from models import connectdb
-
-# TODO Add Change Infos option
-# TODO Add a configuration file with important constants
-# TODO Add a different menu when logged in
-# TODO Fix misspeling at line 15 "Choose an valid option" to "Choose a valid option"
+from models import email
+from models import token
+from time import sleep
 
 
-print('===== LOGIN SYSTEM =====')
-print('(1) - Log In')
-print('(2) - Sign Up')
-print('(3) - Exit')
-option = input('>>>: ').strip()
+def main() -> None:
+    menu()
 
-while option != '1' and option != '2' and option != '3':
-    print('Error: Choose an valid option!')
-    option = input('>>>: ').strip()
 
-# Log in
-if option == '1':
-    database = classes.ConnectDB('localhost', 'root', '', 'login_python')
-    login_attempts = 0
+def menu() -> None:
+    print('======= LOGIN SYSTEM =======')
+    print('(1) - Login')
+    print('(2) - Sign Up')
+    print('(3) - Exit')
+    option: str = input('>>>: ')
 
-    while True:
-        if login_attempts == 3:
-            print('Sorry... you tried to log in too many times. Try again later!')
-            exit()
+    if option == '1':
+        login()
+    elif option == '2':
+        sign_up()
+    elif option == '3':
+        print('Bye Bye...')
+        exit(0)
+    else:
+        print('Error: Select a valid option!')
+        sleep(1)
+        menu()
 
-        email = input('Insert your email: ').strip()
-        password = input('Insert your password: ').strip()
 
-        if database.check_account(email, password):
-            print(f'Logged in!!')
-            break
-        else:
-            print('Email or password not valid!!')
-            login_attempts += 1
+def login() -> None:
+    print('======= LOGIN =======')
 
-# Sign Up
-elif option == '2':
+    database = connectdb.ConnectDB('localhost', 'root', '', 'login_python')
+    database.connect()
+
+    account_obj = account.Account('Joao', 'joao@gmail.com', '1234')
+    user_email: str = input('Insert your email: ')
+    user_password: str = input('Insert your password: ')
+
+    if account_obj.check_account(email=user_email, password=user_password):
+        print('LOGGED IN')
+    else:
+        print('Error: Invalid Credentials')
+        sleep(2)
+        menu()
+
+
+def sign_up():
     pass
 
-# Exit
-else:
-    print('Bye Bye...')
-    exit()
+
+if __name__ == '__main__':
+    main()
