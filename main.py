@@ -1,8 +1,8 @@
-from models import account
-from models import connectdb
-from models import email
-from models import token
-from time import sleep
+from models import account  # type: ignore
+from models import connectdb  # type: ignore
+from models import email  # type: ignore
+from models import token  # type: ignore
+from time import sleep  # type: ignore
 
 
 def main() -> None:

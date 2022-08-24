@@ -1,5 +1,5 @@
-from models import connectdb
-import mysql.connector
+from models import connectdb  # type: ignore
+import mysql.connector  # type: ignore
 from typing import Union
 
 
