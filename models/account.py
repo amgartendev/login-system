@@ -57,22 +57,6 @@ class Account:
         return False
 
     @staticmethod
-    def check_account(email: str, password: str) -> bool:
-        """Check if the account exists in the database and return True"""
-        db = connectdb.ConnectDB('localhost', 'root', '', 'login_python')
-        conn = db.connect()
-        cursor = conn.cursor()
-
-        sql = f"SELECT * FROM accounts WHERE email='{email}' AND password='{password}'"
-        cursor.execute(sql)
-        rows = cursor.fetchall()
-
-        # Check if the email and password passed as argument is registered in the database
-        if len(rows) > 0:
-            return True
-        return False
-
-    @staticmethod
     def send_account(*args) -> Union[bool, str]:
         """Send account details to the database"""
 
