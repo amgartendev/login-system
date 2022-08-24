@@ -79,7 +79,8 @@ def sign_up() -> None:
         token_validation: str = input('Insert your secret code: ')
 
         if token_validation == generated_token:
-            print('SUCESS!! YOU HAVE ACTIVATED YOUR ACCOUNT :)')
+            token_obj.activate_token(generated_token)
+            print('SUCCESS!! YOU HAVE ACTIVATED YOUR ACCOUNT :)')
             sleep(2)
             menu()
         else:
