@@ -5,6 +5,13 @@ from models import token  # type: ignore
 from time import sleep  # type: ignore
 
 
+# TODO Create a maximum login attempts
+# TODO Create a function logged_menu()
+# TODO Create a function in connectdb.py that returns the 'active' column in the 'tokens' table
+# TODO Verify if the account is enabled before let the user log in
+# TODO Create a config file to store all the constants
+
+
 def main() -> None:
     menu()
 
@@ -46,8 +53,43 @@ def login() -> None:
         menu()
 
 
-def sign_up():
-    pass
+def sign_up() -> None:
+    print('======= SIGN UP =======')
+
+    database: connectdb.ConnectDB = connectdb.ConnectDB('localhost', 'root', '', 'login_python')
+    database.connect()
+
+    username: str = input('Insert the username: ')
+    user_email: str = input('Insert the email: ')
+    user_password: str = input('Insert the password: ')
+
+    user_account: account.Account = account.Account(user=username, email=user_email, password=user_password)
+
+    if not user_account.check_user(username) and not user_account.check_email(user_email):
+        user_account.send_account(user_account.user, user_account.email, user_account.password)
+
+        token_obj: token.Token = token.Token()
+        generated_token: str = token_obj.generate_token()
+        token_obj.send_token(generated_token)
+
+        email_obj: email.Email = email.Email()
+        email_obj.send_email(user_email, generated_token)
+
+        print("We've sent you an email with your secret code...")
+        token_validation: str = input('Insert your secret code: ')
+
+        if token_validation == generated_token:
+            print('SUCESS!! YOU HAVE ACTIVATED YOUR ACCOUNT :)')
+            sleep(2)
+            menu()
+        else:
+            print('Error: Sorry. Your token is not valid!')
+            sleep(2)
+            menu()
+    else:
+        print('Error: User or email already taken!')
+        sleep(2)
+        menu()
 
 
 if __name__ == '__main__':
