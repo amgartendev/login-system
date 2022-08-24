@@ -6,10 +6,11 @@ from time import sleep  # type: ignore
 
 
 # TODO Create a maximum login attempts
-# TODO Create a function logged_menu()
 # TODO Create a function in connectdb.py that returns the 'active' column in the 'tokens' table
 # TODO Verify if the account is enabled before let the user log in
 # TODO Create a config file to store all the constants
+# TODO Implement the show_infos function
+# TODO Implement the change_infos functions
 
 
 def main() -> None:
@@ -36,6 +37,27 @@ def menu() -> None:
         menu()
 
 
+def logged_menu() -> None:
+    print('======= LOGGED IN =======')
+    print('(1) - Change Account Infos')
+    print('(2) - Show Account Infos')
+    print('(3) - Log Out')
+    option: str = input('>>>: ')
+
+    if option == '1':
+        change_infos()
+    elif option == '2':
+        show_infos()
+    elif option == '3':
+        print('Logging out...')
+        sleep(1)
+        menu()
+    else:
+        print('Error: Select a valid option!')
+        sleep(1)
+        logged_menu()
+
+
 def login() -> None:
     print('======= LOGIN =======')
 
@@ -46,7 +68,7 @@ def login() -> None:
     user_password: str = input('Insert your password: ')
 
     if database.check_account(email=user_email, password=user_password):
-        print('LOGGED IN')
+        logged_menu()
     else:
         print('Error: Invalid Credentials')
         sleep(2)
@@ -91,6 +113,14 @@ def sign_up() -> None:
         print('Error: User or email already taken!')
         sleep(2)
         menu()
+
+
+def change_infos() -> None:
+    pass
+
+
+def show_infos() -> None:
+    pass
 
 
 if __name__ == '__main__':
