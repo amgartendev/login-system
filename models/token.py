@@ -19,14 +19,14 @@ class Token:
         return token
 
     @staticmethod
-    def send_token(token: str) -> Union[bool, str]:
+    def send_token(token: str, email: str) -> Union[bool, str]:
         """Send token to the database and set it as inactive by default"""
         try:
             db = connectdb.ConnectDB('localhost', 'root', '', 'login_python')
             conn = db.connect()
             cursor = conn.cursor()
 
-            sql = f"INSERT INTO tokens (token, active) VALUES ('{token}', '0')"
+            sql = f"INSERT INTO tokens (token, email, active) VALUES ('{token}', '{email}', '0')"
             cursor.execute(sql)
             conn.commit()
             return True

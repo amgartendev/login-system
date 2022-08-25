@@ -6,7 +6,6 @@ from time import sleep  # type: ignore
 
 
 # TODO Create a maximum login attempts
-# TODO Create a function in connectdb.py that returns the 'active' column in the 'tokens' table
 # TODO Verify if the account is enabled before let the user log in
 # TODO Create a config file to store all the constants
 # TODO Implement the show_infos function
@@ -92,7 +91,7 @@ def sign_up() -> None:
 
         token_obj: token.Token = token.Token()
         generated_token: str = token_obj.generate_token()
-        token_obj.send_token(generated_token)
+        token_obj.send_token(generated_token, user_email)
 
         email_obj: email.Email = email.Email()
         email_obj.send_email(user_email, generated_token)

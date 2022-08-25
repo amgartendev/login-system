@@ -67,9 +67,9 @@ class Account:
             conn = db.connect()
             cursor = conn.cursor()
 
-            sql = f"INSERT INTO accounts (user, email, password) " \
-                  f"VALUES ('{account[0]}', '{account[1]}', '{account[2]}')"
-            cursor.execute(sql)
+            sql_accounts = f"INSERT INTO accounts (user, email, password) " \
+                           f"VALUES ('{account[0]}', '{account[1]}', '{account[2]}')"
+            cursor.execute(sql_accounts)
             conn.commit()
             return True
         except mysql.connector.Error as errorMsg:

@@ -62,3 +62,18 @@ class ConnectDB:
         if len(rows) > 0:
             return True
         return False
+
+    def check_account_status(self, email) -> bool:
+        """Check if the account is active by checking the 'active' column in the table 'tokens' in the database"""
+        db = ConnectDB(self.__dbhost, self.__dbuser, self.__dbpassword, self.__dbname)
+        conn = db.connect()
+        cursor = conn.cursor()
+
+        sql = f"SELECT * FROM tokens WHERE email='{email}' AND active='1'"
+        cursor.execute(sql)
+        rows = cursor.fetchall()
+
+        # Check if the account is activated with the token
+        if len(rows) > 0:
+            return True
+        return False
