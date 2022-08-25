@@ -2,7 +2,7 @@ import mysql.connector  # type: ignore
 
 
 class ConnectDB:
-    def __init__(self, dbhost: str, dbuser: str, dbpassword: str, dbname: str) -> None:
+    def __init__(self: object, dbhost: str, dbuser: str, dbpassword: str, dbname: str) -> None:
         self.__dbhost = dbhost
         self.__dbuser = dbuser
         self.__dbpassword = dbpassword
@@ -63,7 +63,7 @@ class ConnectDB:
             return True
         return False
 
-    def check_account_status(self, email) -> bool:
+    def check_account_status(self, email: str) -> bool:
         """Check if the account is active by checking the 'active' column in the table 'tokens' in the database"""
         db = ConnectDB(self.__dbhost, self.__dbuser, self.__dbpassword, self.__dbname)
         conn = db.connect()

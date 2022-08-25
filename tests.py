@@ -12,8 +12,6 @@ print(f"email: {acc1.email}")
 print(f"password: {acc1.password}")
 print(f"check_user(): {acc1.check_user('joao')}")
 print(f"check_email(): {acc1.check_email('joao@gmail.com')}")
-print(f"check_account() Expect False: {acc1.check_account('joao@gmail.com', '1234')}")  # Expected: False
-print(f"check_account() Expect True: {acc1.check_account('joao@gmail.com', '87312')}")  # Expected: True
 print(f"send_account(): {acc1.send_account(acc1.user, acc1.email, acc1.password)}")
 
 
@@ -25,6 +23,8 @@ print(f"user: {db1.user}")
 print(f"name: {db1.name}")
 print(f"connect(): {db1.connect()}")
 print(f"return_infos(): {db1.return_infos('tokens')}")
+print(f"check_account() Expect False: {db1.check_account('joao@gmail.com', '1234')}")  # Expected: False
+print(f"check_account() Expect True: {db1.check_account('joao@gmail.com', '87312')}")  # Expected: True
 
 
 email = email.Email()
@@ -37,5 +37,5 @@ token = token.Token()
 print("\n=========== TESTING TOKEN ===========")
 print(f"__repr__: {token}")
 print(f"generate_token(): {token.generate_token()}")
-print(f"send_token(): {token.send_token('123')}")
+print(f"send_token(): {token.send_token('123', acc1.email)}")
 print(f"activate_token(): {token.activate_token('123')}")

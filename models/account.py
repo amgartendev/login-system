@@ -4,7 +4,7 @@ from typing import Union
 
 
 class Account:
-    def __init__(self, user: str, email: str, password: str) -> None:
+    def __init__(self: object, user: str, email: str, password: str) -> None:
         self.__user: str = user
         self.__email: str = email
         self.__password: str = password

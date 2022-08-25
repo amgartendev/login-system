@@ -9,6 +9,8 @@ from time import sleep  # type: ignore
 # TODO Create a config file to store all the constants
 # TODO Implement the show_infos function
 # TODO Implement the change_infos functions
+# TODO Create an email to confirm that your acount is activate
+# TODO Create a logo
 
 
 def main() -> None:
