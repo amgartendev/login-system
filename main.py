@@ -21,7 +21,8 @@ def menu() -> None:
     print('======= LOGIN SYSTEM =======')
     print('(1) - Login')
     print('(2) - Sign Up')
-    print('(3) - Exit')
+    print('(3) - Validate Token')
+    print('(4) - Exit')
     option: str = input('>>>: ')
 
     if option == '1':
@@ -29,6 +30,8 @@ def menu() -> None:
     elif option == '2':
         sign_up()
     elif option == '3':
+        validate_token()
+    elif option == '4':
         print('Bye Bye...')
         exit(0)
     else:
@@ -114,6 +117,10 @@ def sign_up() -> None:
         print('Error: User or email already taken!')
         sleep(2)
         menu()
+
+
+def validate_token() -> None:
+    pass
 
 
 def change_infos() -> None:
