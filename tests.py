@@ -22,7 +22,7 @@ print(f"host: {db1.host}")
 print(f"user: {db1.user}")
 print(f"name: {db1.name}")
 print(f"connect(): {db1.connect()}")
-print(f"return_infos(): {db1.return_infos('tokens')}")
+print(f"return_infos(): {db1.return_table_infos('tokens')}")
 print(f"check_account() Expect False: {db1.check_account('joao@gmail.com', '1234')}")  # Expected: False
 print(f"check_account() Expect True: {db1.check_account('joao@gmail.com', '87312')}")  # Expected: True
 

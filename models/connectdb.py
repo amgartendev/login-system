@@ -1,4 +1,5 @@
 import mysql.connector  # type: ignore
+from typing import Union
 
 
 class ConnectDB:
@@ -36,7 +37,7 @@ class ConnectDB:
         except mysql.connector.Error as errorMsg:
             return f'Error: {errorMsg}'
 
-    def return_infos(self, table: str) -> list:
+    def return_table_infos(self, table: str) -> list:
         """Return all the occurrences of the specified table"""
         db = ConnectDB(self.__dbhost, self.__dbuser, self.__dbpassword, self.__dbname)
         conn = db.connect()
@@ -47,6 +48,21 @@ class ConnectDB:
         result = cursor.fetchall()  # Fetch all rows from database table
         print(f'{len(result)} result(s) found in {table}!')
         return result
+
+    def return_account_infos(self, user: str) -> Union[str, bool]:
+        db = ConnectDB(self.__dbhost, self.__dbuser, self.__dbpassword, self.__dbname)
+        conn = db.connect()
+        cursor = conn.cursor()
+
+        sql = f"SELECT * FROM accounts where user='{user}'"
+        cursor.execute(sql)
+        rows = cursor.fetchall()
+
+        infos = f"Username: {rows[0][1]}\nEmail: {rows[0][2]}\nPassword: {rows[0][3]}"
+
+        if len(rows) > 0:
+            return infos
+        return False
 
     def check_account(self, email: str, password: str) -> bool:
         """Check if the account exists in the database and return True"""

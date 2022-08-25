@@ -7,7 +7,6 @@ from time import sleep  # type: ignore
 
 # TODO Create a maximum login attempts
 # TODO Create a config file to store all the constants
-# TODO Implement the show_infos function
 # TODO Implement the change_infos functions
 # TODO Create an email to confirm that your acount is activate
 # TODO Create a logo
@@ -128,7 +127,16 @@ def change_infos() -> None:
 
 
 def show_infos() -> None:
-    pass
+    database = connectdb.ConnectDB('localhost', 'root', '', 'login_python')
+
+    user = input('Insert your username: ')
+    if database.return_account_infos(user):
+        print(database.return_account_infos(user))
+        logged_menu()
+    else:
+        print('Error: This username does not exist!')
+        sleep(2)
+        logged_menu()
 
 
 if __name__ == '__main__':
