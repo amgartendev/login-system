@@ -6,7 +6,6 @@ from time import sleep  # type: ignore
 
 
 # TODO Create a maximum login attempts
-# TODO Verify if the account is enabled before let the user log in
 # TODO Create a config file to store all the constants
 # TODO Implement the show_infos function
 # TODO Implement the change_infos functions
@@ -66,10 +65,11 @@ def login() -> None:
     user_email: str = input('Insert your email: ')
     user_password: str = input('Insert your password: ')
 
-    if database.check_account(email=user_email, password=user_password):
+    if database.check_account(email=user_email, password=user_password) and database.check_account_status(user_email):
         logged_menu()
     else:
-        print('Error: Invalid Credentials')
+        print('Error: Invalid Credentials or Account not active!')
+        print('Check if you insert your code correctly and your email matches your password...')
         sleep(2)
         menu()
 
