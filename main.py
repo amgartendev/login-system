@@ -1,3 +1,4 @@
+import config
 from models import account  # type: ignore
 from models import connectdb  # type: ignore
 from models import email  # type: ignore
@@ -6,7 +7,6 @@ from time import sleep  # type: ignore
 
 
 # TODO Create a maximum login attempts
-# TODO Create a config file to store all the constants
 # TODO Implement the change_infos functions
 # TODO Create a logo
 
@@ -62,7 +62,7 @@ def logged_menu() -> None:
 def login() -> None:
     print('======= LOGIN =======')
 
-    database = connectdb.ConnectDB('localhost', 'root', '', 'login_python')
+    database = connectdb.ConnectDB(config.DB_HOST, config.DB_USER, config.DB_PASSWORD, config.DB_NAME)
     database.connect()
 
     user_email: str = input('Insert your email: ')
@@ -80,7 +80,8 @@ def login() -> None:
 def sign_up() -> None:
     print('======= SIGN UP =======')
 
-    database: connectdb.ConnectDB = connectdb.ConnectDB('localhost', 'root', '', 'login_python')
+    database: connectdb.ConnectDB = connectdb.ConnectDB(config.DB_HOST, config.DB_USER,
+                                                        config.DB_PASSWORD, config.DB_NAME)
     database.connect()
 
     username: str = input('Insert the username: ')
@@ -127,7 +128,7 @@ def change_infos() -> None:
 
 
 def show_infos() -> None:
-    database = connectdb.ConnectDB('localhost', 'root', '', 'login_python')
+    database = connectdb.ConnectDB(config.DB_HOST, config.DB_USER, config.DB_PASSWORD, config.DB_NAME)
 
     user = input('Insert your username: ')
     if database.return_account_infos(user):

@@ -1,5 +1,6 @@
-from models import connectdb  # type: ignore
+import config
 import mysql.connector  # type: ignore
+from models import connectdb  # type: ignore
 from typing import Union
 
 
@@ -27,7 +28,7 @@ class Account:
     @staticmethod
     def check_user(user: str) -> bool:
         """Check if the user is already taken and return True"""
-        db = connectdb.ConnectDB('localhost', 'root', '', 'login_python')
+        db = connectdb.ConnectDB(config.DB_HOST, config.DB_USER, config.DB_PASSWORD, config.DB_NAME)
         conn = db.connect()
         cursor = conn.cursor()
 
@@ -43,7 +44,7 @@ class Account:
     @staticmethod
     def check_email(email: str) -> bool:
         """Check if the email is already taken and return True"""
-        db = connectdb.ConnectDB('localhost', 'root', '', 'login_python')
+        db = connectdb.ConnectDB(config.DB_HOST, config.DB_USER, config.DB_PASSWORD, config.DB_NAME)
         conn = db.connect()
         cursor = conn.cursor()
 
@@ -63,7 +64,7 @@ class Account:
         account = tuple(args)
 
         try:
-            db = connectdb.ConnectDB('localhost', 'root', '', 'login_python')
+            db = connectdb.ConnectDB(config.DB_HOST, config.DB_USER, config.DB_PASSWORD, config.DB_NAME)
             conn = db.connect()
             cursor = conn.cursor()
 

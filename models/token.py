@@ -1,5 +1,6 @@
-from models import connectdb  # type: ignore
+import config
 import mysql.connector  # type: ignore
+from models import connectdb  # type: ignore
 from random import choice
 from typing import Union
 
@@ -22,7 +23,7 @@ class Token:
     def send_token(token: str, email: str) -> Union[bool, str]:
         """Send token to the database and set it as inactive by default"""
         try:
-            db = connectdb.ConnectDB('localhost', 'root', '', 'login_python')
+            db = connectdb.ConnectDB(config.DB_HOST, config.DB_USER, config.DB_PASSWORD, config.DB_NAME)
             conn = db.connect()
             cursor = conn.cursor()
 
@@ -37,7 +38,7 @@ class Token:
     def activate_token(token: str) -> Union[bool, str]:
         """Set token column in the database as 1 (active) and return True"""
         try:
-            db = connectdb.ConnectDB('localhost', 'root', '', 'login_python')
+            db = connectdb.ConnectDB(config.DB_HOST, config.DB_USER, config.DB_PASSWORD, config.DB_NAME)
             conn = db.connect()
             cursor = conn.cursor()
 
