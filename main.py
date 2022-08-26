@@ -8,7 +8,6 @@ from time import sleep  # type: ignore
 # TODO Create a maximum login attempts
 # TODO Create a config file to store all the constants
 # TODO Implement the change_infos functions
-# TODO Create an email to confirm that your acount is activate
 # TODO Create a logo
 
 
@@ -106,6 +105,7 @@ def sign_up() -> None:
         if token_validation == generated_token:
             token_obj.activate_token(generated_token)
             print('SUCCESS!! YOU HAVE ACTIVATED YOUR ACCOUNT :)')
+            email_obj.send_confirmation(user_email, user_account.user)
             sleep(2)
             menu()
         else:
