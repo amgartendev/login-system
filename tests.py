@@ -1,3 +1,4 @@
+import config
 from models import account
 from models import connectdb
 from models import email
@@ -15,7 +16,7 @@ print(f"check_email(): {acc1.check_email('joao@gmail.com')}")
 print(f"send_account(): {acc1.send_account(acc1.user, acc1.email, acc1.password)}")
 
 
-db1 = connectdb.ConnectDB('localhost', 'root', '', 'login_python')
+db1 = connectdb.ConnectDB(config.DB_HOST, config.DB_USER, config.DB_PASSWORD, config.DB_NAME)
 print("\n=========== TESTING CONNECTDB ===========")
 print(f"__repr__: {db1}")
 print(f"host: {db1.host}")
