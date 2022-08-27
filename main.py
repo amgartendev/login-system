@@ -7,13 +7,10 @@ from time import sleep  # type: ignore
 
 
 # TODO Create a maximum login attempts
-# TODO Implement the change_username() method in account.py
 # TODO Implement the change_email() method in account.py
 # TODO Implement the change_password() method in account.py
 # TODO Create a logo
 # TODO Fix List Index Out Of Range when returning an invalid username in show_infos()
-# TODO Create a new boolean parameter in check_account() method named "by_user"
-# TODO Use the parameter "by_user" in check_account() in functions change_username() and change_password()
 # TODO Create a new email template when user change the email and set the "active" table in the database as 0
 # TODO Use the new email template in line 188
 # TODO Make sure that the new token is updated in the database when user use the change_email() function
@@ -98,8 +95,9 @@ def login() -> None:
     user_email: str = input('Insert your email: ')
     user_password: str = input('Insert your password: ')
 
-    if database.check_account(email=user_email, password=user_password) and database.check_account_status(user_email):
-        logged_menu()
+    if database.check_account(email=user_email, password=user_password, username=''):
+        if database.check_account_status(user_email):
+            logged_menu()
     else:
         print('Error: Invalid Credentials or Account not active!')
         print('Check if you insert your code correctly and your email matches your password...')
@@ -157,17 +155,22 @@ def change_username() -> None:
     current_username: str = input('Insert your current username: ')
     new_username: str = input('Insert your new username: ')
 
-    if not account.Account.check_user(new_username):
-        if account.Account.change_username(current_username, new_username):
-            print(f'Your username is {new_username} now!')
-            sleep(2)
-            logged_menu()
+    if account.Account.check_user(current_username):
+        if not account.Account.check_user(new_username):
+            if account.Account.change_username(current_username, new_username):
+                print(f'Your username is {new_username} now!')
+                sleep(2)
+                logged_menu()
+            else:
+                print(f'Sorry, we had a problem updating your username. Try again later...')
+                sleep(2)
+                logged_menu()
         else:
-            print(f'Sorry, we had a problem updating your username. Try again later...')
+            print('Error: Sorry, this username is already taken!')
             sleep(2)
-            logged_menu()
+            change_infos_menu()
     else:
-        print('Error: Sorry, this username is already taken!')
+        print('Error: Your current username does not exist!')
         sleep(2)
         change_infos_menu()
 
@@ -180,10 +183,10 @@ def change_email() -> None:
     token_obj = token.Token()
     generated_token = token_obj.generate_token()
 
-    username: str = input('Insert your email: ')
+    current_email: str = input('Insert your email: ')
     password_confirmation: str = input('Insert your password: ')
 
-    if database.check_account(username, password_confirmation):
+    if database.check_account(email=current_email, password=password_confirmation, username=''):
         print('--------------------')
         new_email: str = input('Insert your new email: ')
         if account.Account.change_email():
@@ -206,10 +209,10 @@ def change_email() -> None:
 def change_password() -> None:
     database = connectdb.ConnectDB(config.DB_HOST, config.DB_USER, config.DB_PASSWORD, config.DB_NAME)
 
-    username: str = input('Insert your email: ')
+    username: str = input('Insert your username: ')
     password_confirmation: str = input('Insert your password: ')
 
-    if database.check_account(username, password_confirmation):
+    if database.check_account(email='', username=username, password=password_confirmation, by_username=True):
         print('--------------------')
         new_password: str = input('Insert your new password: ')
         new_password_confirmation: str = input('Confirm your new password: ')

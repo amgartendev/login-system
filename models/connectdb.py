@@ -64,13 +64,18 @@ class ConnectDB:
             return infos
         return False
 
-    def check_account(self, email: str, password: str) -> bool:
+    def check_account(self, username: str, email: str, password: str, by_username: bool = False) -> bool:
         """Check if the account exists in the database and return True"""
+
         db = ConnectDB(self.__dbhost, self.__dbuser, self.__dbpassword, self.__dbname)
         conn = db.connect()
         cursor = conn.cursor()
 
-        sql = f"SELECT * FROM accounts WHERE email='{email}' AND password='{password}'"
+        if by_username and len(username) > 0:
+            sql = f"SELECT * FROM accounts WHERE user='{username}' AND password='{password}'"
+        else:
+            sql = f"SELECT * FROM accounts WHERE email='{email}' AND password='{password}'"
+
         cursor.execute(sql)
         rows = cursor.fetchall()
 
