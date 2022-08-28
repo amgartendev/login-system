@@ -8,7 +8,6 @@ from time import sleep  # type: ignore
 
 
 # TODO Create a logo
-# TODO Check if the email is valid in validate_token()
 # TODO Update email when user change his email in tokens table
 
 
@@ -165,18 +164,23 @@ def validate_token() -> None:
     user_email: str = input('Insert your email: ')
     user_token: str = input('Insert the token you want to activate: ')
 
-    if token_obj.check_token_existence(user_token):
-        if not database.check_account_status(user_email):
-            token_obj.activate_token(user_token)
-            print(Fore.LIGHTGREEN_EX + 'SUCCESS!! YOU HAVE ACTIVATED YOUR ACCOUNT :)' + Fore.RESET)
-            sleep(2)
-            menu()
+    if token_obj.verify_token_owner(user_email, user_token):
+        if token_obj.check_token_existence(user_token):
+            if not database.check_account_status(user_email):
+                token_obj.activate_token(user_token)
+                print(Fore.LIGHTGREEN_EX + 'SUCCESS!! YOU HAVE ACTIVATED YOUR ACCOUNT :)' + Fore.RESET)
+                sleep(2)
+                menu()
+            else:
+                print(Fore.LIGHTGREEN_EX + 'YOUR ACCOUNT IS ALREADY ACTIVE! NO NEED TO ACTIVATE IT AGAIN' + Fore.RESET)
+                sleep(2)
+                menu()
         else:
-            print(Fore.LIGHTGREEN_EX + 'YOUR ACCOUNT IS ALREADY ACTIVE! NO NEED TO ACTIVATE IT AGAIN' + Fore.RESET)
+            print(Fore.LIGHTRED_EX + 'Error: Sorry... Your token is not valid!' + Fore.RESET)
             sleep(2)
             menu()
     else:
-        print(Fore.LIGHTRED_EX + 'Error: Sorry... Your token is not valid!' + Fore.RESET)
+        print(Fore.LIGHTRED_EX + 'Error: The token you inserted does not match your account!' + Fore.RESET)
         sleep(2)
         menu()
 
@@ -192,7 +196,8 @@ def change_username() -> None:
                 sleep(2)
                 logged_menu()
             else:
-                print(Fore.LIGHTRED_EX + f'Sorry, we had a problem updating your username. Try again later...' + Fore.RESET)
+                print(Fore.LIGHTRED_EX + f'Sorry, we had a problem updating your username. Try again later...'
+                      + Fore.RESET)
                 sleep(2)
                 logged_menu()
         else:
@@ -231,7 +236,8 @@ def change_email() -> None:
                 sleep(3)
                 logged_menu()
             else:
-                print(Fore.LIGHTRED_EX + f'Sorry, we had a problem updating your email. Try again later...' + Fore.RESET)
+                print(Fore.LIGHTRED_EX + f'Sorry, we had a problem updating your email. Try again later...'
+                      + Fore.RESET)
                 sleep(2)
                 logged_menu()
         else:
@@ -262,7 +268,8 @@ def change_password() -> None:
                 sleep(2)
                 logged_menu()
             else:
-                print(Fore.LIGHTRED_EX + f'Sorry, we had a problem updating your password. Try again later...' + Fore.RESET)
+                print(Fore.LIGHTRED_EX + f'Sorry, we had a problem updating your password. Try again later...'
+                      + Fore.RESET)
                 sleep(2)
                 logged_menu()
         else:

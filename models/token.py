@@ -53,6 +53,24 @@ class Token:
             return f'Error: {errorMsg}'
 
     @staticmethod
+    def verify_token_owner(email: str, token: str) -> Union[bool, str]:
+        """Check by email if the token inserted is the same in the database"""
+        try:
+            db = connectdb.ConnectDB(config.DB_HOST, config.DB_USER, config.DB_PASSWORD, config.DB_NAME)
+            conn = db.connect()
+            cursor = conn.cursor()
+
+            sql = f"SELECT * FROM tokens WHERE email='{email}' AND token='{token}'"
+            cursor.execute(sql)
+            rows = cursor.fetchall()
+
+            if len(rows) > 0:
+                return True
+            return False
+        except mysql.connector.Error as errorMsg:
+            return f'Error: {errorMsg}'
+
+    @staticmethod
     def activate_token(token: str) -> Union[bool, str]:
         """Set token column in the database as 1 (active) and return True"""
         try:
