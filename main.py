@@ -1,4 +1,5 @@
 import config
+from colorama import Fore  # type: ignore
 from models import account  # type: ignore
 from models import connectdb  # type: ignore
 from models import email  # type: ignore
@@ -6,8 +7,9 @@ from models import token  # type: ignore
 from time import sleep  # type: ignore
 
 
-# TODO Create a maximum login attempts
 # TODO Create a logo
+# TODO Check if the email has an '@' in all functions and methods that use the SMTP connection to send emails
+# TODO Check if the token is already active in validate_token()
 
 
 def main() -> None:
@@ -15,11 +17,11 @@ def main() -> None:
 
 
 def menu() -> None:
-    print('======= LOGIN SYSTEM =======')
-    print('(1) - Login')
-    print('(2) - Sign Up')
-    print('(3) - Validate Token')
-    print('(4) - Exit')
+    print(Fore.LIGHTBLUE_EX + '======= LOGIN SYSTEM =======')
+    print(Fore.LIGHTBLUE_EX + '(1)' + Fore.RESET + ' - Login')
+    print(Fore.LIGHTBLUE_EX + '(2)' + Fore.RESET + ' - Sign Up')
+    print(Fore.LIGHTBLUE_EX + '(3)' + Fore.RESET + ' - Validate Token')
+    print(Fore.LIGHTBLUE_EX + '(4)' + Fore.RESET + ' - Exit')
     option: str = input('>>>: ')
 
     if option == '1':
@@ -32,16 +34,16 @@ def menu() -> None:
         print('Bye Bye...')
         exit(0)
     else:
-        print('Error: Select a valid option!')
+        print(Fore.LIGHTRED_EX + 'Error: Select a valid option!' + Fore.RESET)
         sleep(1)
         menu()
 
 
 def logged_menu() -> None:
-    print('======= LOGGED IN =======')
-    print('(1) - Change Account Infos')
-    print('(2) - Show Account Infos')
-    print('(3) - Log Out')
+    print(Fore.LIGHTBLUE_EX + '======= LOGGED IN =======' + Fore.RESET)
+    print(Fore.LIGHTBLUE_EX + '(1)' + Fore.RESET + ' - Change Account Infos')
+    print(Fore.LIGHTBLUE_EX + '(2)' + Fore.RESET + ' - Show Account Infos')
+    print(Fore.LIGHTBLUE_EX + '(3)' + Fore.RESET + ' - Log Out')
     option: str = input('>>>: ')
 
     if option == '1':
@@ -49,21 +51,21 @@ def logged_menu() -> None:
     elif option == '2':
         show_infos()
     elif option == '3':
-        print('Logging out...')
+        print(Fore.YELLOW + 'Logging out...' + Fore.RESET)
         sleep(1)
         menu()
     else:
-        print('Error: Select a valid option!')
+        print(Fore.LIGHTRED_EX + 'Error: Select a valid option!' + Fore.RESET)
         sleep(1)
         logged_menu()
 
 
 def change_infos_menu() -> None:
-    print('======= CHANGE INFOS =======')
-    print('(1) - Change Username')
-    print('(2) - Change Email')
-    print('(3) - Change Password')
-    print('(4) - Go Back')
+    print(Fore.LIGHTBLUE_EX + '======= CHANGE INFOS =======' + Fore.RESET)
+    print(Fore.LIGHTBLUE_EX + '(1)' + Fore.RESET + ' - Change Username')
+    print(Fore.LIGHTBLUE_EX + '(2)' + Fore.RESET + ' - Change Email')
+    print(Fore.LIGHTBLUE_EX + '(3)' + Fore.RESET + ' - Change Password')
+    print(Fore.LIGHTBLUE_EX + '(4)' + Fore.RESET + ' - Go Back')
     option: str = input('>>>: ')
 
     if option == '1':
@@ -75,13 +77,13 @@ def change_infos_menu() -> None:
     elif option == '4':
         logged_menu()
     else:
-        print('Error: Select a valid option!')
+        print(Fore.LIGHTRED_EX + 'Error: Select a valid option!' + Fore.RESET)
         sleep(2)
         logged_menu()
 
 
 def login() -> None:
-    print('======= LOGIN =======')
+    print(Fore.LIGHTBLUE_EX + '======= LOGIN =======' + Fore.RESET)
 
     database = connectdb.ConnectDB(config.DB_HOST, config.DB_USER, config.DB_PASSWORD, config.DB_NAME)
     database.connect()
@@ -93,18 +95,19 @@ def login() -> None:
         if database.check_account_status(user_email):
             logged_menu()
         else:
-            print('Error: Account not active!')
-            print('Check if you have activated your account with the token sent by your email!')
+            print(Fore.LIGHTRED_EX + 'Error: Account not active!' + Fore.RESET)
+            print(Fore.YELLOW + 'Check if you have activated your account with the token sent by your email!'
+                  + Fore.RESET)
             sleep(2)
             menu()
     else:
-        print('Error: Invalid Credentials!')
+        print(Fore.LIGHTRED_EX + 'Error: Invalid Credentials!' + Fore.RESET)
         sleep(2)
         menu()
 
 
 def sign_up() -> None:
-    print('======= SIGN UP =======')
+    print(Fore.LIGHTBLUE_EX + '======= SIGN UP =======' + Fore.RESET)
 
     database: connectdb.ConnectDB = connectdb.ConnectDB(config.DB_HOST, config.DB_USER,
                                                         config.DB_PASSWORD, config.DB_NAME)
@@ -126,27 +129,27 @@ def sign_up() -> None:
         email_obj: email.Email = email.Email()
         email_obj.send_email(user_email, generated_token)
 
-        print("We've sent you an email with your secret code...")
+        print(Fore.YELLOW + "We've sent you an email with your secret code..." + Fore.RESET)
         token_validation: str = input('Insert your secret code: ')
 
         if token_validation == generated_token:
             token_obj.activate_token(generated_token)
-            print('SUCCESS!! YOU HAVE ACTIVATED YOUR ACCOUNT :)')
+            print(Fore.LIGHTGREEN_EX + 'SUCCESS!! YOU HAVE ACTIVATED YOUR ACCOUNT :)' + Fore.RESET)
             email_obj.send_confirmation(user_email, user_account.user)
             sleep(2)
             menu()
         else:
-            print('Error: Sorry. Your token is not valid!')
+            print(Fore.LIGHTRED_EX + 'Error: Sorry... Your token is not valid!' + Fore.RESET)
             sleep(2)
             menu()
     else:
-        print('Error: User or email already taken!')
+        print(Fore.LIGHTRED_EX + 'Error: Username or email already taken!' + Fore.RESET)
         sleep(2)
         menu()
 
 
 def validate_token() -> None:
-    print('======= VALIDATE TOKEN =======')
+    print(Fore.LIGHTBLUE_EX + '======= VALIDATE TOKEN =======' + Fore.RESET)
 
     token_obj = token.Token()
 
@@ -154,9 +157,9 @@ def validate_token() -> None:
 
     if token_obj.check_token_existence(user_token):
         token_obj.activate_token(user_token)
-        print('SUCCESS!! YOU HAVE ACTIVATED YOUR ACCOUNT :)')
+        print(Fore.LIGHTGREEN_EX + 'SUCCESS!! YOU HAVE ACTIVATED YOUR ACCOUNT :)' + Fore.RESET)
     else:
-        print('Error: Sorry. Your token is not valid!')
+        print(Fore.LIGHTRED_EX + 'Error: Sorry... Your token is not valid!' + Fore.RESET)
         sleep(2)
         menu()
 
@@ -168,19 +171,19 @@ def change_username() -> None:
     if account.Account.check_user(current_username):
         if not account.Account.check_user(new_username):
             if account.Account.change_username(current_username, new_username):
-                print(f'Your username is {new_username} now!')
+                print(Fore.LIGHTGREEN_EX + f'Your username is {new_username} now!' + Fore.RESET)
                 sleep(2)
                 logged_menu()
             else:
-                print(f'Sorry, we had a problem updating your username. Try again later...')
+                print(Fore.LIGHTRED_EX + f'Sorry, we had a problem updating your username. Try again later...' + Fore.RESET)
                 sleep(2)
                 logged_menu()
         else:
-            print('Error: Sorry, this username is already taken!')
+            print(Fore.LIGHTRED_EX + 'Error: Sorry, this username is already taken!' + Fore.RESET)
             sleep(2)
             change_infos_menu()
     else:
-        print('Error: Your current username does not exist!')
+        print(Fore.LIGHTRED_EX + 'Error: Your current username does not exist!' + Fore.RESET)
         sleep(2)
         change_infos_menu()
 
@@ -202,17 +205,19 @@ def change_email() -> None:
         if account.Account.change_email(current_email, new_email):
             email_obj.send_change_confirmation(current_email, generated_token)
             token_obj.deactivate_token(current_email, generated_token)
-            print('Now you need to activate your account again...')
-            print("We've sent you an email with your secret code...")
-            print('Go to the menu and select the option "(3) - Validate Token" and insert your new token!')
+            print(Fore.YELLOW + 'Now you need to activate your account again...' + Fore.RESET)
+            print(Fore.YELLOW + "We've sent you an email with your secret code..." + Fore.RESET)
+            print(Fore.YELLOW + 'Go to the menu and select the option "(3) - Validate Token" and'
+                                ' insert your new token!' + Fore.RESET)
+
             sleep(3)
             logged_menu()
         else:
-            print(f'Sorry, we had a problem updating your email. Try again later...')
+            print(Fore.LIGHTRED_EX + f'Sorry, we had a problem updating your email. Try again later...' + Fore.RESET)
             sleep(2)
             logged_menu()
     else:
-        print('Error: This username does not match this password!')
+        print(Fore.LIGHTRED_EX + 'Error: This username does not match this password!' + Fore.RESET)
         sleep(2)
         logged_menu()
 
@@ -230,19 +235,19 @@ def change_password() -> None:
 
         if new_password == new_password_confirmation:
             if account.Account.change_password(new_password, username):
-                print(f"You've updated your password!")
+                print(Fore.LIGHTGREEN_EX + f"You've updated your password!" + Fore.RESET)
                 sleep(2)
                 logged_menu()
             else:
-                print(f'Sorry, we had a problem updating your password. Try again later...')
+                print(Fore.LIGHTRED_EX + f'Sorry, we had a problem updating your password. Try again later...' + Fore.RESET)
                 sleep(2)
                 logged_menu()
         else:
-            print('Error: The passwords does not match!')
+            print(Fore.LIGHTRED_EX + 'Error: The passwords does not match!' + Fore.RESET)
             sleep(2)
             logged_menu()
     else:
-        print('Error: This username does not match this password!')
+        print(Fore.LIGHTRED_EX + 'Error: This username does not match this password!' + Fore.RESET)
         sleep(2)
         logged_menu()
 
@@ -255,7 +260,7 @@ def show_infos() -> None:
         print(database.return_account_infos(user))
         logged_menu()
     else:
-        print('Error: This username does not exist!')
+        print(Fore.LIGHTRED_EX + 'Error: This username does not exist!' + Fore.RESET)
         sleep(2)
         logged_menu()
 
