@@ -148,7 +148,19 @@ def sign_up() -> None:
 
 
 def validate_token() -> None:
-    pass
+    print('======= VALIDATE TOKEN =======')
+
+    token_obj = token.Token()
+
+    user_token: str = input('Insert the token you want to activate: ')
+
+    if token_obj.check_token_existence(user_token):
+        token_obj.activate_token(user_token)
+        print('SUCCESS!! YOU HAVE ACTIVATED YOUR ACCOUNT :)')
+    else:
+        print('Error: Sorry. Your token is not valid!')
+        sleep(2)
+        menu()
 
 
 def change_username() -> None:
