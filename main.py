@@ -151,13 +151,20 @@ def sign_up() -> None:
 def validate_token() -> None:
     print(Fore.LIGHTBLUE_EX + '======= VALIDATE TOKEN =======' + Fore.RESET)
 
+    database = connectdb.ConnectDB(config.DB_HOST, config.DB_USER, config.DB_PASSWORD, config.DB_NAME)
+    database.connect()
+
     token_obj = token.Token()
 
+    user_email: str = input('Insert your email: ')
     user_token: str = input('Insert the token you want to activate: ')
 
     if token_obj.check_token_existence(user_token):
-        token_obj.activate_token(user_token)
-        print(Fore.LIGHTGREEN_EX + 'SUCCESS!! YOU HAVE ACTIVATED YOUR ACCOUNT :)' + Fore.RESET)
+        if not database.check_account_status(user_email):
+            token_obj.activate_token(user_token)
+            print(Fore.LIGHTGREEN_EX + 'SUCCESS!! YOU HAVE ACTIVATED YOUR ACCOUNT :)' + Fore.RESET)
+        else:
+            print(Fore.LIGHTGREEN_EX + 'YOUR ACCOUNT IS ALREADY ACTIVE! NO NEED TO ACTIVATE IT AGAIN' + Fore.RESET)
     else:
         print(Fore.LIGHTRED_EX + 'Error: Sorry... Your token is not valid!' + Fore.RESET)
         sleep(2)
