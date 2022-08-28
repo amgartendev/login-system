@@ -85,7 +85,7 @@ class Email:
         email_receiver = receiver
 
         msg = EmailMessage()
-        msg['Subject'] = 'YOUR ACCOUNT IS ACTIVE!'
+        msg['Subject'] = 'CHANGE EMAIL CONFIRMATION'
         msg['From'] = email_sender
         msg['To'] = email_receiver
         msg.set_content(f'CONFIRM YOUR NEW EMAIL')
@@ -94,11 +94,11 @@ class Email:
                         <html>
                             <body>
                                 <h1 style="color:#047BBF; text-align:center;">CONFIRM YOUR NEW EMAIL</h1>
-                                <h1 style="text-align:center;">Hey! We received an email change request. It was
-                                you?</h1>
-                                <h2>Your acess token:<br>{token}</h2>
-                                <p>If you didn't request any email change, you should change your password as soon as
-                                possible.</p>
+                                <h1 style="text-align:center;">Hey! We received an email change request. It 
+                                was you?</h1>
+                                <h2 style="text-align:center;">Your acess token:<br>{token}</h2>
+                                <p style="text-align:center;"> If you didn't request any email change, you should change
+                                your password as soon as possible.</p>
                             </body>
                         </html>
                         """, subtype='html')

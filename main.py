@@ -7,12 +7,10 @@ from time import sleep  # type: ignore
 
 
 # TODO Create a maximum login attempts
-# TODO Implement the change_email() method in account.py
 # TODO Implement the change_password() method in account.py
 # TODO Create a logo
 # TODO Create a new email template when user change the email and set the "active" table in the database as 0
 # TODO Make sure that the new token is updated in the database when user use the change_email() function
-# TODO Configure email constants
 
 
 def main() -> None:
