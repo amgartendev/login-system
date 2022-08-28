@@ -8,7 +8,6 @@ from time import sleep  # type: ignore
 
 
 # TODO Create a logo
-# TODO Fix error when validating token, the menu should pop up
 # TODO Check if the email is valid in validate_token()
 # TODO Update email when user change his email in tokens table
 
@@ -170,8 +169,12 @@ def validate_token() -> None:
         if not database.check_account_status(user_email):
             token_obj.activate_token(user_token)
             print(Fore.LIGHTGREEN_EX + 'SUCCESS!! YOU HAVE ACTIVATED YOUR ACCOUNT :)' + Fore.RESET)
+            sleep(2)
+            menu()
         else:
             print(Fore.LIGHTGREEN_EX + 'YOUR ACCOUNT IS ALREADY ACTIVE! NO NEED TO ACTIVATE IT AGAIN' + Fore.RESET)
+            sleep(2)
+            menu()
     else:
         print(Fore.LIGHTRED_EX + 'Error: Sorry... Your token is not valid!' + Fore.RESET)
         sleep(2)
