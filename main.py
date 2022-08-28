@@ -10,7 +10,6 @@ from time import sleep  # type: ignore
 # TODO Implement the change_password() method in account.py
 # TODO Create a logo
 # TODO Implement the validade_token() in main.py
-# TODO Fix bug in login() when account is not active in the database
 
 
 def main() -> None:
@@ -95,9 +94,13 @@ def login() -> None:
     if database.check_account(email=user_email, password=user_password, username=''):
         if database.check_account_status(user_email):
             logged_menu()
+        else:
+            print('Error: Account not active!')
+            print('Check if you have activated your account with the token sent by your email!')
+            sleep(2)
+            menu()
     else:
-        print('Error: Invalid Credentials or Account not active!')
-        print('Check if you insert your code correctly and your email matches your password...')
+        print('Error: Invalid Credentials!')
         sleep(2)
         menu()
 
