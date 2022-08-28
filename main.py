@@ -9,7 +9,6 @@ from time import sleep  # type: ignore
 
 # TODO Create a logo
 # TODO Check if the email has an '@' in all functions and methods that use the SMTP connection to send emails
-# TODO Check if the token is already active in validate_token()
 
 
 def main() -> None:
