@@ -75,3 +75,42 @@ class Email:
         except smtplib.SMTPAuthenticationError as errorMsg:
             print(f"Error: {errorMsg}")
             return False
+
+    @staticmethod
+    def send_change_confirmation(receiver: str, token: str) -> bool:
+        """Send an email confirming that the user truly wants to change his email"""
+        email_sender = 'your_email_here@gmail.com'  # Your Google account here
+        email_password = 'you_app_password_here'  # Your app password here
+        email_receiver = receiver
+
+        msg = EmailMessage()
+        msg['Subject'] = 'YOUR ACCOUNT IS ACTIVE!'
+        msg['From'] = email_sender
+        msg['To'] = email_receiver
+        msg.set_content(f'CONFIRM YOUR NEW EMAIL')
+        msg.add_alternative(f"""\
+                        <!DOCTYPE html>
+                        <html>
+                            <body>
+                                <h1 style="color:#047BBF; text-align:center;">CONFIRM YOUR NEW EMAIL</h1>
+                                <h1 style="text-align:center;">Hey! We received an email change request. It was
+                                you?</h1>
+                                <h2>Your acess token:<br>{token}</h2>
+                                <p>If you didn't request any email change, you should change your password as soon as
+                                possible.</p>
+                            </body>
+                        </html>
+                        """, subtype='html')
+
+        try:
+            # Gmail -> smtp.gmail.com
+            # Hotmail -> smtp.live.com
+            # Yahoo -> smtp.mail.yahoo.com
+            with smtplib.SMTP('smtp.gmail.com') as connection:
+                connection.starttls()  # Encrypting our connection to the server
+                connection.login(email_sender, email_password)
+                connection.send_message(msg)
+                return True
+        except smtplib.SMTPAuthenticationError as errorMsg:
+            print(f"Error: {errorMsg}")
+            return False

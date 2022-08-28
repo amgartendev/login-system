@@ -11,8 +11,8 @@ from time import sleep  # type: ignore
 # TODO Implement the change_password() method in account.py
 # TODO Create a logo
 # TODO Create a new email template when user change the email and set the "active" table in the database as 0
-# TODO Use the new email template in line 193
 # TODO Make sure that the new token is updated in the database when user use the change_email() function
+# TODO Configure email constants
 
 
 def main() -> None:
@@ -189,7 +189,7 @@ def change_email() -> None:
         print('--------------------')
         new_email: str = input('Insert your new email: ')
         if account.Account.change_email():
-            email_obj.send_email(new_email, generated_token)
+            email_obj.send_change_confirmation(new_email, generated_token)
             print('Now you need to activate your account again...')
             print("We've sent you an email with your secret code...")
             print('Go to the menu and select the option "(3) - Validate Token" and insert your new token!')

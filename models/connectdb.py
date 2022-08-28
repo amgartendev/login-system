@@ -50,6 +50,7 @@ class ConnectDB:
         return result
 
     def return_account_infos(self, user: str) -> Union[str, bool]:
+        """Return the account information of the user"""
         db = ConnectDB(self.__dbhost, self.__dbuser, self.__dbpassword, self.__dbname)
         conn = db.connect()
         cursor = conn.cursor()
