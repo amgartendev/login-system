@@ -1,3 +1,4 @@
+import config
 import smtplib
 from email.message import EmailMessage
 
@@ -9,8 +10,8 @@ class Email:
     @staticmethod
     def send_email(receiver: str, token: str) -> bool:
         """Send an email with the authentication token"""
-        email_sender = 'your_email_here@gmail.com'  # Your Google account here
-        email_password = 'you_app_password_here'  # Your app password here
+        email_sender = config.EMAIL_SENDER  # Your Google account here
+        email_password = config.EMAIL_PASSWORD  # Your app password here
         email_receiver = receiver
 
         msg = EmailMessage()
@@ -44,8 +45,8 @@ class Email:
     @staticmethod
     def send_confirmation(receiver: str, name: str) -> bool:
         """Send an email confirming that your account is active"""
-        email_sender = 'your_email_here@gmail.com'  # Your Google account here
-        email_password = 'you_app_password_here'  # Your app password here
+        email_sender = config.EMAIL_SENDER  # Your Google account here
+        email_password = config.EMAIL_PASSWORD  # Your app password here
         email_receiver = receiver
 
         msg = EmailMessage()
@@ -79,8 +80,8 @@ class Email:
     @staticmethod
     def send_change_confirmation(receiver: str, token: str) -> bool:
         """Send an email confirming that the user truly wants to change his email"""
-        email_sender = 'your_email_here@gmail.com'  # Your Google account here
-        email_password = 'you_app_password_here'  # Your app password here
+        email_sender = config.EMAIL_SENDER  # Your Google account here
+        email_password = config.EMAIL_PASSWORD  # Your app password here
         email_receiver = receiver
 
         msg = EmailMessage()
