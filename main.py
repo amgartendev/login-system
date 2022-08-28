@@ -188,7 +188,7 @@ def change_email() -> None:
     if database.check_account(email=current_email, password=password_confirmation, username=''):
         print('--------------------')
         new_email: str = input('Insert your new email: ')
-        if account.Account.change_email():
+        if account.Account.change_email(current_email, new_email):
             email_obj.send_change_confirmation(new_email, generated_token)
             print('Now you need to activate your account again...')
             print("We've sent you an email with your secret code...")

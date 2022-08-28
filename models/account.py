@@ -92,9 +92,19 @@ class Account:
             return f'Error: {errorMsg}'
 
     @staticmethod
-    def change_email() -> Union[bool, str]:
+    def change_email(old_email, new_email) -> Union[bool, str]:
         """Change the email of the account and update it in the database"""
-        pass
+        db = connectdb.ConnectDB(config.DB_HOST, config.DB_USER, config.DB_PASSWORD, config.DB_NAME)
+        conn = db.connect()
+        cursor = conn.cursor()
+
+        try:
+            sql = f"UPDATE accounts SET email='{new_email}' WHERE user='{old_email}'"
+            cursor.execute(sql)
+            conn.commit()
+            return True
+        except mysql.connector.Error as errorMsg:
+            return f'Error: {errorMsg}'
 
     @staticmethod
     def change_password(user: str, old_password: str) -> Union[bool, str]:
