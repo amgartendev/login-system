@@ -10,9 +10,8 @@ from time import sleep  # type: ignore
 # TODO Implement the change_email() method in account.py
 # TODO Implement the change_password() method in account.py
 # TODO Create a logo
-# TODO Fix List Index Out Of Range when returning an invalid username in show_infos()
 # TODO Create a new email template when user change the email and set the "active" table in the database as 0
-# TODO Use the new email template in line 188
+# TODO Use the new email template in line 193
 # TODO Make sure that the new token is updated in the database when user use the change_email() function
 
 

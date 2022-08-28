@@ -54,15 +54,17 @@ class ConnectDB:
         conn = db.connect()
         cursor = conn.cursor()
 
-        sql = f"SELECT * FROM accounts where user='{user}'"
-        cursor.execute(sql)
-        rows = cursor.fetchall()
+        try:
+            sql = f"SELECT * FROM accounts where user='{user}'"
+            cursor.execute(sql)
+            rows = cursor.fetchall()
 
-        infos = f"Username: {rows[0][1]}\nEmail: {rows[0][2]}\nPassword: {rows[0][3]}"
+            infos = f"Username: {rows[0][1]}\nEmail: {rows[0][2]}\nPassword: {rows[0][3]}"
 
-        if len(rows) > 0:
-            return infos
-        return False
+            if len(rows) > 0:
+                return infos
+        except IndexError:
+            return False
 
     def check_account(self, username: str, email: str, password: str, by_username: bool = False) -> bool:
         """Check if the account exists in the database and return True"""
