@@ -48,3 +48,22 @@ class Token:
             return True
         except mysql.connector.Error as errorMsg:
             return f'Error: {errorMsg}'
+
+    @staticmethod
+    def deactivate_token(old_email: str, token: str) -> Union[bool, str]:
+        """Set token column in the database as 0 (inactive) and return True"""
+        try:
+            db = connectdb.ConnectDB(config.DB_HOST, config.DB_USER, config.DB_PASSWORD, config.DB_NAME)
+            conn = db.connect()
+            cursor = conn.cursor()
+
+            sql_change_token = f"UPDATE tokens SET token='{token}' WHERE email='{old_email}'"
+            cursor.execute(sql_change_token)
+
+            sql_set_account_as_inactive = f"UPDATE tokens SET active='0' WHERE email='{old_email}'"
+            cursor.execute(sql_set_account_as_inactive)
+
+            conn.commit()
+            return True
+        except mysql.connector.Error as errorMsg:
+            return f'Error: {errorMsg}'
