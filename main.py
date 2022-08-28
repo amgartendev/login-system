@@ -8,7 +8,9 @@ from time import sleep  # type: ignore
 
 
 # TODO Create a logo
-# TODO Check if the email has an '@' in all functions and methods that use the SMTP connection to send emails
+# TODO Fix error when validating token, the menu should pop up
+# TODO Check if the email is valid in validate_token()
+# TODO Update email when user change his email in tokens table
 
 
 def main() -> None:
@@ -116,33 +118,39 @@ def sign_up() -> None:
     user_email: str = input('Insert the email: ')
     user_password: str = input('Insert the password: ')
 
-    user_account: account.Account = account.Account(user=username, email=user_email, password=user_password)
+    if '@gmail.com' in user_email or '@yahoo.com' in user_email or '@hotmail.com' in user_email:
+        user_account: account.Account = account.Account(user=username, email=user_email, password=user_password)
 
-    if not user_account.check_user(username) and not user_account.check_email(user_email):
-        user_account.send_account(user_account.user, user_account.email, user_account.password)
+        if not user_account.check_user(username) and not user_account.check_email(user_email):
+            user_account.send_account(user_account.user, user_account.email, user_account.password)
 
-        token_obj: token.Token = token.Token()
-        generated_token: str = token_obj.generate_token()
-        token_obj.send_token(generated_token, user_email)
+            token_obj: token.Token = token.Token()
+            generated_token: str = token_obj.generate_token()
+            token_obj.send_token(generated_token, user_email)
 
-        email_obj: email.Email = email.Email()
-        email_obj.send_email(user_email, generated_token)
+            email_obj: email.Email = email.Email()
+            email_obj.send_email(user_email, generated_token)
 
-        print(Fore.YELLOW + "We've sent you an email with your secret code..." + Fore.RESET)
-        token_validation: str = input('Insert your secret code: ')
+            print(Fore.YELLOW + "We've sent you an email with your secret code..." + Fore.RESET)
+            token_validation: str = input('Insert your secret code: ')
 
-        if token_validation == generated_token:
-            token_obj.activate_token(generated_token)
-            print(Fore.LIGHTGREEN_EX + 'SUCCESS!! YOU HAVE ACTIVATED YOUR ACCOUNT :)' + Fore.RESET)
-            email_obj.send_confirmation(user_email, user_account.user)
-            sleep(2)
-            menu()
+            if token_validation == generated_token:
+                token_obj.activate_token(generated_token)
+                print(Fore.LIGHTGREEN_EX + 'SUCCESS!! YOU HAVE ACTIVATED YOUR ACCOUNT :)' + Fore.RESET)
+                email_obj.send_confirmation(user_email, user_account.user)
+                sleep(2)
+                menu()
+            else:
+                print(Fore.LIGHTRED_EX + 'Error: Sorry... Your token is not valid!' + Fore.RESET)
+                sleep(2)
+                menu()
         else:
-            print(Fore.LIGHTRED_EX + 'Error: Sorry... Your token is not valid!' + Fore.RESET)
+            print(Fore.LIGHTRED_EX + 'Error: Username or email already taken!' + Fore.RESET)
             sleep(2)
             menu()
     else:
-        print(Fore.LIGHTRED_EX + 'Error: Username or email already taken!' + Fore.RESET)
+        print(Fore.LIGHTRED_EX + 'Error: This is not a valid email address!' + Fore.RESET)
+        print(Fore.YELLOW + 'A valid email address is: @gmail.com, @yahoo.com or @hotmail.com' + Fore.RESET)
         sleep(2)
         menu()
 
@@ -208,18 +216,24 @@ def change_email() -> None:
     if database.check_account(email=current_email, password=password_confirmation, username=''):
         print('--------------------')
         new_email: str = input('Insert your new email: ')
-        if account.Account.change_email(current_email, new_email):
-            email_obj.send_change_confirmation(current_email, generated_token)
-            token_obj.deactivate_token(current_email, generated_token)
-            print(Fore.YELLOW + 'Now you need to activate your account again...' + Fore.RESET)
-            print(Fore.YELLOW + "We've sent you an email with your secret code..." + Fore.RESET)
-            print(Fore.YELLOW + 'Go to the menu and select the option "(3) - Validate Token" and'
-                                ' insert your new token!' + Fore.RESET)
+        if '@gmail.com' in new_email or '@yahoo.com' in new_email or '@hotmail.com' in new_email:
+            if account.Account.change_email(current_email, new_email):
+                email_obj.send_change_confirmation(current_email, generated_token)
+                token_obj.deactivate_token(current_email, generated_token)
+                print(Fore.YELLOW + 'Now you need to activate your account again...' + Fore.RESET)
+                print(Fore.YELLOW + "We've sent you an email with your secret code..." + Fore.RESET)
+                print(Fore.YELLOW + 'Go to the menu and select the option "(3) - Validate Token" and'
+                                    ' insert your new token!' + Fore.RESET)
 
-            sleep(3)
-            logged_menu()
+                sleep(3)
+                logged_menu()
+            else:
+                print(Fore.LIGHTRED_EX + f'Sorry, we had a problem updating your email. Try again later...' + Fore.RESET)
+                sleep(2)
+                logged_menu()
         else:
-            print(Fore.LIGHTRED_EX + f'Sorry, we had a problem updating your email. Try again later...' + Fore.RESET)
+            print(Fore.LIGHTRED_EX + 'Error: This is not a valid email address!' + Fore.RESET)
+            print(Fore.YELLOW + 'A valid email address is: @gmail.com, @yahoo.com or @hotmail.com' + Fore.RESET)
             sleep(2)
             logged_menu()
     else:
