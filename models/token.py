@@ -36,7 +36,7 @@ class Token:
 
     @staticmethod
     def check_token_existence(token: str) -> Union[bool, str]:
-        """"""
+        """Check if the token inserted by the user exists in the database"""
         try:
             db = connectdb.ConnectDB(config.DB_HOST, config.DB_USER, config.DB_PASSWORD, config.DB_NAME)
             conn = db.connect()

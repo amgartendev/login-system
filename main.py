@@ -7,9 +7,7 @@ from time import sleep  # type: ignore
 
 
 # TODO Create a maximum login attempts
-# TODO Implement the change_password() method in account.py
 # TODO Create a logo
-# TODO Implement the validade_token() in main.py
 
 
 def main() -> None:
@@ -231,7 +229,7 @@ def change_password() -> None:
         new_password_confirmation: str = input('Confirm your new password: ')
 
         if new_password == new_password_confirmation:
-            if account.Account.change_password(username, new_password):
+            if account.Account.change_password(new_password, username):
                 print(f"You've updated your password!")
                 sleep(2)
                 logged_menu()
