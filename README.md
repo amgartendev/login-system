@@ -16,6 +16,7 @@ If you have any Bug Report you can use this link below to report all
 the bugs you find.
 
 | Type                            | Platforms                               |
+|---------------------------------|-----------------------------------------|
 | ✅ **Pull Requests**           |  https://github.com/amgartendev/unlocked-login-system/pulls|
 | ------------------------------- | --------------------------------------- |
 | 🚨 **Bug Reports**              | https://github.com/amgartendev/unlocked-login-system/issues|
