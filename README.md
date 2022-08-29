@@ -18,7 +18,6 @@ the bugs you find.
 | Type                            | Platforms                               |
 |---------------------------------|-----------------------------------------|
 | ✅ **Pull Requests**           |  https://github.com/amgartendev/unlocked-login-system/pulls|
-| ------------------------------- | --------------------------------------- |
 | 🚨 **Bug Reports**              | https://github.com/amgartendev/unlocked-login-system/issues|
 
 
