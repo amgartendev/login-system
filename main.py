@@ -7,7 +7,6 @@ from models import token  # type: ignore
 from time import sleep  # type: ignore
 
 
-# TODO Create a logo
 # TODO Update email when user change his email in tokens table
 
 
