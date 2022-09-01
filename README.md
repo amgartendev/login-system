@@ -41,7 +41,23 @@ and was not tested in any other operating system until now.
 Follow the steps below to install all the packages necessary to use
 UNLOCKED:
 
+Packages needed:
 ```bash
 pip install --upgrade pip
+pip install colorama
 pip install mysql-connector
 ```
+
+Setting up the Data Base:
+
+This is the database structure:
+
+<img src="https://i.ibb.co/g3DQ8Kk/unknown.png" />
+
+Account table structure:
+
+<img src="https://i.ibb.co/F7V9J5t/unknown.png" />
+
+Token table structure:
+
+<img src="https://i.ibb.co/n7jxvcV/unknown.png" />
