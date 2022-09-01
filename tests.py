@@ -1,7 +1,7 @@
 import config
 from models import account
 from models import connectdb
-from models import email
+from models import emails
 from models import token
 
 
@@ -28,7 +28,7 @@ print(f"check_account() Expect False: {db1.check_account('joao@gmail.com', '1234
 print(f"check_account() Expect True: {db1.check_account('joao@gmail.com', '87312')}")  # Expected: True
 
 
-email = email.Email()
+email = emails.Email()
 print("\n=========== TESTING EMAIL ===========")
 print(f"__repr__: {email}")
 print(f"send_email(): {email.send_email('new_account_registration_here@gmail.com', '123')}")

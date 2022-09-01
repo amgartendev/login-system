@@ -2,7 +2,7 @@ import config
 from colorama import Fore  # type: ignore
 from models import account  # type: ignore
 from models import connectdb  # type: ignore
-from models import email  # type: ignore
+from models import emails  # type: ignore
 from models import token  # type: ignore
 from time import sleep  # type: ignore
 
