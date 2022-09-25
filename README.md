@@ -48,7 +48,8 @@ pip install colorama
 pip install mysql-connector
 ```
 
-### Setting up the Data Base:
+----  
+### 💾 Setting up the Data Base:
 
 This is the database structure, make sure to create all the tables and fields correctly.
 
@@ -60,13 +61,14 @@ Account table structure:
 
 Token table structure:
 
-<img src="https://i.ibb.co/n7jxvcV/unknown.png" />
+<img src="https://i.ibb.co/n7jxvcV/unknown.png" />  
 
-### Setting up your Google Account
+----
+### 🌐 Setting up your Google Account
 
 To send and receive emails using Python, we need to make some changes in our google account.  
 
-1º - Go to your Google Account by <a href="https://myaccount.google.com/?hl=en_UK">clicking here</a>  
+1º - Go to your Google Account by <a href="https://myaccount.google.com/?hl=en_UK" target="_blank">clicking here</a>  
 
 On the top left you will see a panel like this one
 
@@ -87,3 +89,27 @@ On the top left you will see a panel like this one
 5º - Select "Other (Custom Name)" in "Select App" 
   
 <img src="https://i.ibb.co/G3Bn1sB/Screenshot-5.png" />
+  
+6º - Name it whatever you want and click "Generate"  
+  
+<img src="https://i.ibb.co/7Jw4s2j/Screenshot-6.png" />  
+  
+7º - ⚠️ SAVE YOUR PASSWORD ⚠️  
+  
+<img src="https://i.ibb.co/QX4sZbz/Screenshot-7.png" />  
+  
+----
+### 🐍 Setting up Python's Constants
+You can find all the constants in the "config.py" file  
+  
+1º Changing the database constants
+You can change this if you have a different database configuration.  
+But for localhost this is pretty much it
+
+<img src="https://i.ibb.co/ZdMP5mp/Screenshot-8.png" />
+  
+2º Changing the email constants
+Change the value of "EMAIL_SENDER" constant to the email that you created your App Password  
+And the "EMAIL_PASSWORD" to the App Password that I told you to save it for later  
+  
+<img src="https://i.ibb.co/cg1Nrbj/Screenshot-9.png" />
