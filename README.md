@@ -48,9 +48,9 @@ pip install colorama
 pip install mysql-connector
 ```
 
-Setting up the Data Base:
+### Setting up the Data Base:
 
-This is the database structure:
+This is the database structure, make sure to create all the tables and fields correctly.
 
 <img src="https://i.ibb.co/g3DQ8Kk/unknown.png" />
 
@@ -61,3 +61,29 @@ Account table structure:
 Token table structure:
 
 <img src="https://i.ibb.co/n7jxvcV/unknown.png" />
+
+### Setting up your Google Account
+
+To send and receive emails using Python, we need to make some changes in our google account.  
+
+1º - Go to your Google Account by <a href="https://myaccount.google.com/?hl=en_UK">clicking here</a>  
+
+On the top left you will see a panel like this one
+
+<img src="https://i.ibb.co/hc0kz5w/Screenshot-2.png" height="300" />  
+  
+2º - Select "Security"  
+  
+<img src="https://i.ibb.co/QbjwFTD/Screenshot-1.png" height="300" />  
+
+3º - Enable the Second Step Verification
+  
+<img src="https://i.ibb.co/8gzVTG6/Screenshot-3.png" />
+
+4º - A new option named "Apps password" will pop up. Select it  
+  
+<img src="https://i.ibb.co/TPCf7ST/Screenshot-4.png"  />
+  
+5º - Select "Other (Custom Name)" in "Select App" 
+  
+<img src="https://i.ibb.co/G3Bn1sB/Screenshot-5.png" />
