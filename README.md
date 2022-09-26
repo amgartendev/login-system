@@ -102,13 +102,15 @@ On the top left you will see a panel like this one
 ### 🐍 Setting up Python's Constants
 You can find all the constants in the "config.py" file  
   
-1º Changing the database constants
-You can change this if you have a different database configuration.  
+1º Changing the database constants  
+  
+You can change this if you have a different database configuration.    
 But for localhost this is pretty much it
 
 <img src="https://i.ibb.co/ZdMP5mp/Screenshot-8.png" />
   
-2º Changing the email constants
+2º Changing the email constants  
+  
 Change the value of "EMAIL_SENDER" constant to the email that you created your App Password  
 And the "EMAIL_PASSWORD" to the App Password that I told you to save it for later  
   
