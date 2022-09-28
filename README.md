@@ -15,10 +15,10 @@ have any PR, please follow these development pattern.
 If you have any Bug Report you can use this link below to report all
 the bugs you find.
 
-| Type                            | Platforms                               |
+| Type                            | Links                              |
 |---------------------------------|-----------------------------------------|
-| ✅ **Pull Requests**           |  https://github.com/amgartendev/unlocked-login-system/pulls|
-| 🚨 **Bug Reports**              | https://github.com/amgartendev/unlocked-login-system/issues|
+| ✅ **Pull Requests**           |  <b><a href="https://github.com/amgartendev/unlocked-login-system/pulls">Send your Pull Request</a>|
+| 🚨 **Bug Reports**              | <b><a href="https://github.com/amgartendev/unlocked-login-system/issues">Send your Bug Report</a>|
 
 
 ## 💻 UNLOCKED Works in
@@ -26,11 +26,11 @@ the bugs you find.
 This is all the platforms that I've tested the app and it's working so far.
 If your platform is not listed here it was not tested yet.
 
-| Platform | Status    |
-|----------|-----------|
-| PyCharm  | ✅ Working|
-| VS Code  | ✅ Working|
-| CMD      | ✅ Working|
+| Platform | Status      | Lastest Python Version Tested |
+|----------|-------------|-------------------------------|
+| PyCharm  | ✅ Working |             3.10.7            |
+| VS Code  | ✅ Working |             3.10.7            | 
+| CMD      | ✅ Working |             3.10.7            |
 
 
 ## 📦 Install and Set Up UNLOCKED
